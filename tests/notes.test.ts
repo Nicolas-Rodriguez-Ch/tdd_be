@@ -49,4 +49,22 @@ describe("Notes CRUD API", () => {
     expect(response.body.title).toBe(updatedNote.title);
     expect(response.body.content).toBe(updatedNote.content);
   });
+
+  it("should delete an existing note", async () => {
+    const newNote = {
+      title: "Test Title for update",
+      content: "Test content for update",
+    };
+    const creationResponse = await supertest(app).post("/notes").send(newNote);
+    
+    const response = await supertest(app).delete(
+      `/notes/${creationResponse.body.id}`
+    );
+    expect(response.status).toBe(202)
+    expect(response.body.message).toBe("Note successfully deleted");
+    const getResponse = await supertest(app).get(
+      `/notes/${creationResponse.body.id}`
+    );
+    expect(getResponse.status).toBe(404);
+  });
 });

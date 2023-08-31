@@ -44,4 +44,16 @@ router.put("/notes/:id", (req: Request, res: Response) => {
   }
 });
 
+router.delete("/notes/:id", (req: Request, res: Response) => {
+  const id = parseInt(req.params.id, 10);
+  const index = notes.findIndex((note) => note.id === id);
+
+  if (index !== -1) {
+    notes.splice(index, 1);
+    res.status(202).send({ message: "Note successfully deleted" });
+  } else {
+    res.status(404).send({ message: "Note not found" });
+  }
+});
+
 export default router;
