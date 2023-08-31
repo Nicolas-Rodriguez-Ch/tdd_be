@@ -1,13 +1,6 @@
-import express, { Express } from "express";
-import routes from "./routes"
+import app from "./app";
+const port = 8000;
 
-const app: Express = express();
-const port = 8000
-
-app.use("/", routes)
-
-app.listen(port, ()=> {
+app.listen(port, () => {
   console.log(`Server running on port ${port}`);
-  
-})
-export default app
+});

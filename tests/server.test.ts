@@ -1,13 +1,9 @@
-import request from "http";
+import supertest from "supertest";
+import app from "../src/app";
 
 describe("Server Initialization", () => {
-  it("should start the server without errors", (done) => {
-    const req = request.get("http://127.0.0.1:8000", (res) => {
-      expect(res.statusCode).toBe(200);
-      done();
-    });
-    req.on("error", (err) => {
-      done(err);
-    });
+  it("should start the server without errors", async () => {
+    const response = await supertest(app).get("/");
+    expect(response.statusCode).toBe(200);
   });
 });
